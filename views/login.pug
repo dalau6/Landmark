@@ -1,0 +1,105 @@
+extends layout
+
+block content
+  style.
+    .navbar {
+      background: #007bff;
+      border-bottom: thin solid white;
+    }
+  script(src='https://www.google.com/recaptcha/api.js', async='', defer='')
+  script.
+    window.onload = function() {
+      var $recaptcha = document.querySelector('#g-recaptcha-response');
+      if($recaptcha) {
+        $recaptcha.setAttribute("required", "required");
+        }
+    };
+  #myModal.modal.fade
+   .modal-dialog
+     .modal-content
+       .modal-header
+         h4.modal-title Modal Window
+         button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+       .modal-body
+         form(action="mailto:projectlandmark2017@gmail.com?subject=Reset%20Password&body="+recipient, method="post")
+           .form-group
+             label.control-label(for='recipient-name')
+             input#recipient-name.form-control(type='text', name='recipient', placeholder='Email')
+           .modal-footer
+              button#send.btn.btn-default(type='submit') Send
+              button.btn.bt-default(type='button', data-dismiss='modal') Close
+  #body
+    #back
+      .backRight
+      .backLeft
+    #slideBox
+      .topLayer
+        .left
+          .content
+            h2 Sign Up
+            form(action="login", id='login', method='post', required)
+              .form-group
+                label.control-label Email Address
+                input.form-control(type='email', name='email', minlength='3', maxlength='50', placeholder='Email' required)
+              .form-group
+                label.control-label First Name
+                input.form-control(type='text', name='fname', minlength='3', maxlength='50', placeholder='First Name' required)
+              .form-group
+                label.control-label Last Name
+                input.form-control(type='text', name='lname', minlength='3', maxlength='50', placeholder='Last Name' required)
+              .form-group
+                label.control-label Password
+                input.form-control(type='password', name='password', id='password' minlength='3', maxlength='50', placeholder='Password' required)
+                br
+                label.control-label Confirm Password
+                br
+                input.form-control(type='password', name='password2', id='password2', minlength='3', maxlength='50', placeholder='Password' required)
+              .form-group
+                label.control-label Buyer/Agent?
+                select.form-control#option(name='type', required='')
+                  option(value='') Select
+                  option(value='buyer') Buyer
+                  option(value='agent') Agent
+              .form-group
+                input(type='checkbox', name='agree', value='y' required)
+                |
+                |
+                a(href="#", data-toggle='modal', data-target='#myModal', data-title='Terms', data-body='By accepting to our terms of services, you can\'t sue us!', style="color:#03A9F4") Accept Terms of Services
+                br
+                br
+                .g-recaptcha(style="transform:scale(0.82);-webkit-transform:scale(0.82);transform-origin:0 0;-webkit-transform-origin:0 0;" data-sitekey='6Lc1bDkUAAAAALRK8L3nWKReCN33PXAAamvXWUMo')
+              #msg
+              br
+              button#mySubmit(type='submit') Sign up
+              button#goLeft.off(type='button') Login
+              Br
+              Br
+              Br
+        .right
+          .content
+            br
+            br
+            if(exists != undefined)
+              p
+                font(color='red').alert.alert-danger #{exists}
+            br
+            h2 Login
+            form(action="dashboard", id='dashboard', method='post')
+              .form-group
+                label.control-label Email Address
+                input.form-control(type='email', name='email', maxlength='50', placeholder='Email' required)
+              .form-group
+                label.control-label Password
+                input.form-control(type='password', name='password', maxlength='50', placeholder='Password' required)
+              br
+              br
+              a(href='#', data-toggle='modal', data-target='#myModal', data-title='Reset Password', data-body='Enter your email address below and we\'ll reset your password.', style="color:#03A9F4") Forgot Password?
+              br
+              br
+              button(type='submit') Login
+              button#goRight.off(type='button') Sign Up
+              br
+              br
+              if(message != undefined)
+                p
+                  font(color='red') #{message}

@@ -1,0 +1,59 @@
+extends layout
+
+block content
+  style.
+    .navbar{background:#007bff;border-bottom:thin solid #fff;}body,html{font-family:'Open Sans',sans-serif;height:100%;background-image:url()}ul{list-style:none;margin:0;padding:0}
+  section#sidebar
+    #sidebar-nav
+      ul
+        li
+          a(href='#')
+            i.fa.fa-tasks
+            |  Listings
+        li
+          a(href='logout')
+            i.fa.fa-sign-out
+            |  Logout
+  .container-fluid
+    section#content
+      br
+      center
+        H
+          font(color='#007bff', size='70px;', style='verdana') Welcome home, #{session.user.fname.toUpperCase()}!
+        Br
+        if session.user.type == "agent"
+          .container-fluid
+            table.table-fill
+                thead
+                  tr
+                    th Image
+                    th Address
+                      .sort
+                    th City
+                      .sort
+                    th Zip
+                      .sort
+                    th Price
+                      .sort
+                    th Bedrooms
+                      .sort
+                    th Bathrooms
+                      .sort
+                    th
+                      a.btn.btn-primary(href='/upload') Upload Listing !{`&nbsp;`.repeat()}
+                  if results != undefined
+                    each val, index in results
+                      tr
+                        td.data
+                          #{results[index].img}
+                        td.data #{results[index].Address}
+                        td.data #{results[index].City}
+                        td.data #{results[index].Zip}
+                        td.data #{results[index].Price}
+                        td.data #{results[index].Bedrooms}
+                        td.data #{results[index].Bathrooms}
+                        td
+                          form(action='/listings', method='post')
+                            input(type='hidden', name='val', value=results[index].Address)
+                            button(type='submit') Delete
+        Br

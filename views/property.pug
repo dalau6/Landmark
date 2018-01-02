@@ -1,0 +1,99 @@
+extends layout
+
+block content
+  .container
+    style.
+      .navbar{background:#007bff;border-bottom:thin solid #fff;}body{background-image:url()}#map{height:350px}
+    Br
+    form(action='search', method='get', style="max-width: 50%")
+      .fta__container
+        .fta__field
+          span.fta__query
+            input.jst(name='q', type='text', placeholder='Search...', maxlength='20', autofocus='', autocomplete='off')
+          span.fta__button
+            button(type='submit')
+              span.fta__search-icon
+    br
+    .row
+      .col-xl-10
+        H(style='color: #222')
+          font(size='20') #{result.Address}
+        script.
+          let add=[];
+          add.push("#{result.Address}");
+          let city="#{result.City}";
+          let zip="#{result.Zip}";
+        script
+          include ../public/javascripts/map.js
+        .row
+          .col-xl-10
+            #carouselExampleControls.carousel.slide('data-slide')
+              .carousel-inner(role='listbox')
+                .carousel-item.active
+                  img.d-block.img-fluid(src=img, style='height: 497px; width: 100%')
+                // .carousel-item
+                //   img.d-block.img-fluid(src="http://a.abcnews.com/images/Lifestyle/playboy-mansion-02-ht-jef-171005_4x3_992.jpg", style='height: 497px; width: 100%')
+              a.carousel-control-prev(href='#carouselExampleControls', role='button', data-slide='prev')
+                span.carousel-control-prev-icon(aria-hidden='true')
+                span.sr-only Previous
+              a.carousel-control-next(href='#carouselExampleControls', role='button', data-slide='next')
+                span.carousel-control-next-icon(aria-hidden='true')
+                span.sr-only Next
+            br
+            #rcorners
+              h3.my-3 Property Details
+              i.fa.fa-home(style='font-size: 1.2rem;') !{`&nbsp;`.repeat()} <strong>Address:</strong> #{result.Address}, #{result.City}, CA, #{result.Zip}
+              br
+              i.fa.fa-usd(style='font-size: 1.2rem;') !{`&nbsp;`.repeat()} <strong>Price:</strong> $#{result.Price.toLocaleString('en')}
+              br
+              i.fa.fa-bed(style='font-size: 1.2rem;') !{`&nbsp;`.repeat()} <strong>Bedrooms:</strong> #{result.Bedrooms}
+              br
+              i.fa.fa-bath(style='font-size: 1.2rem;') !{`&nbsp;`.repeat()} <strong>Bedrooms:</strong> #{result.Bathrooms}
+              Br
+            br
+        .row
+          .col-lg-5
+            #map
+            Br
+          .col-lg-7
+            .container.contact
+              p.m-0.text-center.text-white <strong>Contact Agent</strong>
+            form(action='send', method="post" style="border-radius: 0;")
+              input.form-control(type='text', name='subject', value=result.Address, style="background:white;border-radius: 0", readonly="readonly")
+              input.form-control(type='hidden', name='email', value=result.Email, required)
+              input.form-control(type='text', name='reply', style="border-radius: 0;", placeholder='Email', required)
+              textarea.form-control(rows='6', name='body', placeholder='Message', style='height: 200px; border-radius: 0' required)
+              button(type='submit') Send Message
+              span
+                button(type='Reset') Reset
+            Br
+      .col-lg-2
+        br
+        .row
+          h4(style='white-space: nowrap;') Popular Listings
+        .row
+          a(href='/property?id=1156%20High%20St')
+            img.img-responsive.img-circle(src='https://res.cloudinary.com/ds4czpq2x/image/upload/v1508651366/1156%20High%20St.jpg')
+            h5(style='white-space: nowrap;')
+              a(href='/property?id=1156%20High%20St') 1156 High St
+        .row
+          a(href='/property?id=1313%20Disneyland%20Dr')
+            img.img-responsive.img-circle(src='https://res.cloudinary.com/ds4czpq2x/image/upload/v1508651366/1313%20Disneyland%20Dr.jpg')
+            h5(style='white-space: nowrap;')
+              a(href='/property?id=1313%20Disneyland%20Dr') 1313 Disneyland Dr
+        .row
+          a(href='/property?id=1400%20Fulton%20St')
+            img.img-responsive.img-circle(src='https://res.cloudinary.com/ds4czpq2x/image/upload/v1508651366/1400%20Fulton%20St.jpg')
+            h5(style='white-space: nowrap;')
+              a(href='/property?id=1400%20Fulton%20St') 1400 Fulton St
+        .row
+          a(href='/property?id=1600%20Holloway')
+            img.img-responsive.img-circle(src='https://res.cloudinary.com/ds4czpq2x/image/upload/1600_Holloway.jpg')
+            h5(style='white-space: nowrap;')
+              a(href='/property?id=1600%20Holloway') 1600 Holloway
+        .row
+          a(href='/property?id=50%20Phelan%20Ave')
+            img.img-responsive.img-circle(src='https://res.cloudinary.com/ds4czpq2x/image/upload/v1508651366/50%20Phelan%20Ave.jpg')
+            h5(style='white-space: nowrap;')
+              a(href='/property?id=50%20Phelan%20Ave') 50 Phelan Ave
+  script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBhtnZc1ZSJwZlGwjQ75G9cgDXuRZvsYTA&callback=initMap', async='', defer='')

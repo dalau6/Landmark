@@ -1,0 +1,126 @@
+extends layout
+
+block content
+  style.
+    .navbar {
+      background: #007bff;
+      border-bottom: thin solid white;
+    }
+  script(src='./javascripts/jquery.ui.widget.js')
+  script(src='./javascripts/jquery.iframe-transport.js')
+  script(src='./javascripts/jquery.fileupload.js')
+  script(src='./javascripts/jquery.cloudinary.js')
+  script(src='./javascripts/cloudinary-jquery-file-upload.js')
+  script(src='./javascripts/photo.js')
+  script(src='./javascripts/photo_album.js')
+  //- link(href='./stylesheets/photo_album.css', media='all', rel='stylesheet', type='text/css')
+  h
+    font(color='green') #{msg}
+  if session.user.type == "agent"
+    #direct_upload
+      h1 Upload Listing
+      h1 <strong> Image name MUST have the same name as Address! </strong>
+      p You can also drag and drop an image file into the dashed area.
+      form(action='upload', method='post')
+        .form_line
+          label(for='photo_title') Address:
+          .form_controls
+            input#photo_title(name='title', size='30', type='text', placeholder='Address', required)
+        .form_line
+          label City:
+          .form_controls
+            input(name='city', size='30', type='text', placeholder='City', required)
+        .form_line
+          label Zip Code:
+          .form_controls
+            input(name='zip', size='30', type='text', placeholder='Zip Code', required)
+        .form_line
+          label Price:
+          .form_controls
+            input(name='price', size='30', type='text', placeholder='Price', required)
+        .form_line
+          label Bathrooms:
+          .form_controls
+            input(name='bathrooms', size='30', type='text', placeholder='Bathrooms', required)
+        .form_line
+          label Bedrooms:
+          .form_controls
+            input(name='bedrooms', size='30', type='text', placeholder='Bedrooms', required)
+        .form_line
+          .form_controls
+            input(name='email', size='30', type='hidden', value=session.user.email)
+        .form_line
+          label(for='photo_image') Image:
+          .form_controls
+            .upload_button_holder
+              a.upload_button(href='#') Upload
+              #{cloudinary.uploader.image_upload_tag('image_id', { callback: cloudinary_cors, format: "jpg", use_filename:true, unique_filename:false, return_delete_token: true })}
+            span.status
+        .form_line
+          .form_controls
+            .preview
+        .form_line
+          .form_controls
+            input(name='type', type='hidden', value='direct')
+            input(name='commit', type='submit', value='Submit Photo')
+        Br
+  a.back_link(href='/dashboard') Back to list
+  Br
+  #info
+  script.
+    !{cloudinary.cloudinary_js_config()}
+  script.
+    $(document).ready(function() {
+     $(".cloudinary-fileupload")
+     .cloudinary_fileupload({
+       dropZone: "#direct_upload",
+       start: function (e) {
+         $(".status").text("Starting upload...");
+       },
+       progress: function (e, data) {
+         $(".status").text("Uploading... " + Math.round((data.loaded * 100.0) / data.total) + "%");
+       },
+       fail: function (e, data) {
+         $(".status").text("Upload failed");
+       }
+     })
+     .off("cloudinarydone").on("cloudinarydone", function (e, data) {
+       $(".status").text("");
+       var preview = $(".preview").html('');
+       $.cloudinary.image(data.result.public_id, {
+         format: data.result.format, width: 50, height: 50, crop: "fit"
+       }).appendTo(preview);
+       $('<a>').
+         addClass('delete_by_token').
+         attr({href: '#'}).
+         data({delete_token: data.result.delete_token}).
+         html('&times;').
+         appendTo(preview).
+         click(function(e) {
+         e.preventDefault();
+         $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
+           $('.preview').html('');
+           $('#info').html('');
+           $("#photo_bytes").val('');
+           $('input[name="photo[image]"]').remove();
+         }).fail(function() {
+           $('.status').text("Cannot delete image");
+         });
+       });
+       view_upload_details(data.result);
+     });
+    });
+    function view_upload_details(upload) {
+     // Build an html table out of the upload object
+     var rows = [];
+     $.each(upload, function(k,v){
+       rows.push(
+         $("<tr>")
+         .append($("<td>").text(k))
+         .append($("<td>").text(JSON.stringify(v))));
+     });
+     $("#info").html(
+       $("<div class=\"upload_details\">")
+       .append("<h2>Upload metadata:</h2>")
+       .append($("<table>").append(rows)));
+    }

@@ -1,0 +1,14 @@
+script.
+  add.push("#{response[index].Address}")
+script
+  include ../public/javascripts/map.js
+li.card
+  a(href='property?id='+response[index].Address)
+    #overlay
+      #{img[index]}
+    .bottom-left.shadow(style='max-width:500px')
+      ul.price.bl <strong> $ #{response[index].Price.toLocaleString('en')} </strong>
+        h #{response[index].Bedrooms} Bed(s) · !{`&nbsp;`.repeat()}
+        h #{response[index].Bathrooms} Bathroom(s) !{`&nbsp;`.repeat()}
+      ul.bl #{response[index].Address}, #{response[index].City}, #{response[index].Zip}
+      br

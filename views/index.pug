@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  .container
+    div(class="search-wrapper")
+      center
+        H
+          img(src='https://res.cloudinary.com/ds4czpq2x/image/upload/v1512611847/fa17g03/logo.png', width='90', height='90', style="padding-bottom: 20px")
+          font(color='#007bff', size='70px;', style='verdana') Land your next home
+        form(action='search', method='get', id='main' style="width:100%;")
+          .fta__container
+            .fta__field
+              span.fta__query
+                input.jst(name='q', type='search', placeholder='Search...', maxlength='20', autofocus='', autocomplete='off')
+              span.fta__button
+                button(type='submit')
+                  span.fta__search-icon
+        h2(style="margin-top:150px")
+          font(color='#007bff', size='6px;', style='verdana') Featured Listings
+        br
+        #gallery(style="padding-left: 10%")
+          .responsive
+            .gallery
+              a(href='/property?id=1156%20High%20St')
+                img(src='https://res.cloudinary.com/ds4czpq2x/image/upload/v1508651366/1156%20High%20St.jpg')
+              .desc
+                a(href='/property?id=1156%20High%20St') 1156 High St
+          .responsive
+            .gallery
+              a(href='/property?id=1313%20Disneyland%20Dr')
+                img(src='https://res.cloudinary.com/ds4czpq2x/image/upload/v1508651366/1313%20Disneyland%20Dr.jpg')
+              .desc
+                a(href='/property?id=1313%20Disneyland%20Dr') 1313 Disneyland Dr
+          .responsive
+            .gallery
+              a(href='/property?id=1400%20Fulton%20St')
+                img(src='https://res.cloudinary.com/ds4czpq2x/image/upload/v1508651366/1400%20Fulton%20St.jpg')
+              .desc
+                a(href='/property?id=1400%20Fulton%20St') 1400 Fulton St
+          .responsive
+            .gallery
+              a(href='/property?id=50%20Phelan%20Ave')
+                img(src='https://res.cloudinary.com/ds4czpq2x/image/upload/v1508651366/50%20Phelan%20Ave.jpg')
+              .desc
+                a(href='/property?id=50%20Phelan%20Ave') 50 Phelan Ave
+          .clearfix
+        Br

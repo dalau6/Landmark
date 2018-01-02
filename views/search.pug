@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  style.
+    .navbar{background:#007bff;border-bottom:thin solid #fff}
+  include filters
+  script.
+    let add = [];
+    let city = [];
+    let zip = [];
+  #bodys
+    .lefts
+      #map
+    .rights
+      .contents
+        if count === 0 && matches.length != 0
+          H <strong><a style='color:red;'>No results for "#{query}". Here are some suggested results: </a></strong>
+          each val, index in matches
+            li(style='list-style: none;')
+              a(href='search?q='+ matches[index]) <strong>#{matches[index]} </strong
+        else if count === 0
+          p(style="text-align:center") <strong><a style='color:red;'>No Results Found for <a style='color:#007bff;'>"#{query}"
+        else
+          p(style="text-align:center") <strong>#{count} Results for <a style='color:#007bff;'>"#{query}"</a></strong>
+          ul#list
+            each val, index in response
+              script.
+                add.push("#{response[index].Address}")
+                city.push("#{response[index].City}")
+                zip.push("#{response[index].Zip}")
+              script
+                include ../public/javascripts/map.js
+              include card
+          Br
+          Br
+          Br
+  script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBhtnZc1ZSJwZlGwjQ75G9cgDXuRZvsYTA&callback=initMap', async='', defer='')

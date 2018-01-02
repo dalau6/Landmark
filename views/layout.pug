@@ -1,0 +1,54 @@
+doctype html
+html
+  head
+    title Landmark
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    script.
+      o=!{JSON.stringify(myData)}
+    //- script(src='./javascripts/analytics.js')
+    //- script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js', integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh', crossorigin='anonymous')
+    //- script(src='https://code.jquery.com/jquery-3.2.1.min.js', integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=', crossorigin='anonymous')
+    //- script(src='./javascripts/layout.js')
+    script(src='./javascripts/bundle.js')
+    //- script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js', integrity='sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1', crossorigin='anonymous')
+    //- link(href='./stylesheets/layout.css', rel='stylesheet')
+    //- link(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M', crossorigin='anonymous')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+  body
+    nav.navbar.navbar-expand-md.navbar-dark.fixed-top.transboxNav.n
+      img(src='https://res.cloudinary.com/ds4czpq2x/image/upload/v1512611847/fa17g03/logo.png', width='60', height='40')
+      a.navbar-brand(href='/')
+        h.a(style='color: #212529') <strong>Landmark</strong>
+      a.navbar-brand(href='javascript:window.history.back();')
+        h.a.back(style='color: #212529') Back
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarsExampleDefault.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+        ul.navbar-nav.mr-auto-right
+          li.nav-item.active
+            a.nav-link(href='/about')
+              h.a(style='color: #212529') ABOUT
+          li.nav-item.active
+            a.nav-link(href='/agents')
+              h.a(style='color: #212529') AGENTS
+          if session.user === NULL
+            li.nav-item.active
+              a.nav-link(href='/login')
+                h.a(style='color: #212529') LOGIN
+          else
+            li.nav-item.active
+              .dropdown
+                a.active.nav-link(href='/dashboard')
+                  h.a(style='color: #212529') <strong>#{(session.user.fname).toUpperCase()} #{(session.user.lname).toUpperCase()}</strong>
+                  .dropdown-content
+                    a.a(href='/dashboard') Dashboard
+                    a.a(href='/logout') Logout
+    block content
+    block foot
+    #top
+      i.fa.fa-chevron-up.icon-white
+    footer.footer.transbox
+      .container
+        p.m-0.text-center.text-white Landmark &copy; 2017

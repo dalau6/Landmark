@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  .container-fluid
+    style.
+      .navbar{background:#007bff;border-bottom:thin solid #fff;}body{background-image:url()}
+    br
+    center
+      H
+        font(color='#007bff', size='70px;', style='verdana')
+          a(href='/login') Click Here to Become an Agent
+    br
+    table(style='width:100%')
+      tr
+        th Email Address
+        th First Name
+        th Last Name
+      each val, index in results
+        tr
+          td
+            a(href='mailto:'+results[index].email+'?subject=Real%20Estate') #{results[index].email}
+          td #{results[index].fname}
+          td #{results[index].lname}
+    Br

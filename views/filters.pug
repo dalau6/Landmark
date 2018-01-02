@@ -1,0 +1,33 @@
+nav.navbar.navbar-expand-md.f
+  ul.navbar-nav.mr-auto.col-lg-6
+    form(action='search', method='get', style="width: 100%")
+      .fta__container
+        .fta__field
+          span.fta__query
+            input.jst(name='q', type='text', placeholder='Search...', maxlength='20', autofocus='', autocomplete='off', value = query)
+          span.fta__button
+            button(type='submit')
+              span.fta__search-icon
+  ul.nav.navbar-nav.mr-auto
+    li.nav-item.active.dropdown
+      a.nav-link.shadow.dropdown-toggle#price(href='#', data-toggle='dropdown', style= 'color: #f3f3f3')
+        | <strong>Price</strong>
+      .dropdown-menu(aria-labelledby='navbarDropdownMenuLink')
+        a.dropdown-item#low(href='#') Low to High
+        a.dropdown-item#high(href='#') High to Low
+    li.nav-item.active.dropdown
+      a.nav-link.shadow.dropdown-toggle#bd(href='#', data-toggle='dropdown', style= 'color: #f3f3f3')
+        | <strong>Bedrooms</strong>
+      .dropdown-menu#dropbd(aria-labelledby='navbarDropdownMenuLink')
+        a.dropdown-item(href='#', data-value='1') 1+
+        a.dropdown-item(href='#', data-value='2') 2+
+        a.dropdown-item(href='#', data-value='3') 3+
+        a.dropdown-item(href='#', data-value='4') 4+
+    li.nav-item.active.dropdown
+      a.nav-link.shadow.dropdown-toggle#ba(href='#', data-toggle='dropdown', style= 'color: #f3f3f3')
+       | <strong>Bathrooms</strong>
+      .dropdown-menu#dropba(aria-labelledby='navbarDropdownMenuLink')
+        a.dropdown-item(href='#', data-value='1') 1+
+        a.dropdown-item(href='#', data-value='2') 2+
+        a.dropdown-item(href='#', data-value='3') 3+
+        a.dropdown-item(href='#', data-value='4') 4+
